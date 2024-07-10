@@ -12,6 +12,7 @@ Original file is located at
 
 import requests
 from bs4 import BeautifulSoup
+import pandas as pd
 
 #setup connection to apis
 headers = {
@@ -20,6 +21,7 @@ headers = {
 }
 
 session = requests.Session()
+companies=[]
 
 def scrape(url):
   response = session.get(url, headers = headers).text
@@ -27,7 +29,11 @@ def scrape(url):
   result = soup.find('div', {'class': 'infinite-container'})
   li =  result.find_all('div', {'class': 'infinite-item'})
   for i in li:
-    print(i.find('h3').text)
+    c = i.find('a', {'id': 'startup-website-link'})
+    if not c:
+      continue
+    company = { 'name': c.text , 'link': c['href'] }
+    companies.append(company)
   return soup
 
 def next_url(soup):
@@ -37,19 +43,18 @@ def next_url(soup):
 
 def scraper(base_url, max_pages):
   soup = scrape(base_url)
-  print(base_url)
   for i in range(1, max_pages):
     url = next_url(soup)
     if not url:
       break
     target_url = f'https://topstartups.io/{url}'
     soup = scrape(target_url)
-    print(target_url)
 
 if __name__ == '__main__':
   base_url = 'https://topstartups.io/?hq_location=USA'
-  max_pages = 5
+  max_pages = 1
   scraper(base_url, max_pages)
+  print(companies)
 #nlp, tokenize and filter keywords
 
 #sort and output results
