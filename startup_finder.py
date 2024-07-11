@@ -23,7 +23,7 @@ headers = {
 session = requests.Session()
 companies=[]
 
-def scrape(url):
+def get_companies(url):
   response = session.get(url, headers = headers).text
   soup = BeautifulSoup(response, 'html.parser')
   result = soup.find('div', {'class': 'infinite-container'})
@@ -40,21 +40,27 @@ def next_url(soup):
   pagination = soup.find('a', {'class': 'infinite-more-link'})
   if pagination and 'href' in pagination.attrs:
     return pagination['href']
+  
+def get_careers_page(companies):
+  df = pd.DataFrame(companies)
+  df['careers'] = df['link'].map(lambda x: x.replace('?utm_source=topstartups.io', 'careers'))
+  return df[['name', 'careers']]
 
 def scraper(base_url, max_pages):
-  soup = scrape(base_url)
+  soup = get_companies(base_url)
   for i in range(1, max_pages):
     url = next_url(soup)
     if not url:
       break
     target_url = f'https://topstartups.io/{url}'
-    soup = scrape(target_url)
+    soup = get_companies(target_url)
 
 if __name__ == '__main__':
   base_url = 'https://topstartups.io/?hq_location=USA'
-  max_pages = 1
+  max_pages = 10
   scraper(base_url, max_pages)
-  print(companies)
+  companies_df = get_careers_page(companies)
+  print(companies_df)
 #nlp, tokenize and filter keywords
 
 #sort and output results
