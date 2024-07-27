@@ -6,7 +6,8 @@ This project is a web scraper built with Python and BeautifulSoup to collect inf
 
 - Retrieve startup company names from a specified website
 - Parse and extract relevant information using BeautifulSoup
-- Plan to extend the functionality to find and scrape career pages for job listings
+- Find and scrape career pages for job listings
+- Extend to filter relevant job posts
 
 ## Prerequisites
 
