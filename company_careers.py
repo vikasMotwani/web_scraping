@@ -16,7 +16,7 @@ from selenium import webdriver
 from selenium.common.exceptions import WebDriverException
 import time
 from urllib.parse import urljoin
-import re
+import requests
 
 #setup connection to apis
 options = webdriver.ChromeOptions()
@@ -65,12 +65,23 @@ def get_careers_href(company):
     response=driver.page_source.encode('utf-8').strip()
     soup = BeautifulSoup(response, 'html.parser')
     career_link = soup.find('a', href=True, text='Careers')
+    print(career_link)
     if career_link:
       career_href = urljoin(company, career_link['href'])
-      return career_href
-    return urljoin(company, '/careers')
+    else:
+      career_href = urljoin(company, '/careers')
+    if check_link(career_href):
+       return career_href
+    return None
   except WebDriverException as e:
     return None
+  
+def check_link(url):
+    try:
+        driver.get(url)
+        return url
+    except Exception as e:
+        return False
 
 if __name__ == '__main__':
   base_url = 'https://topstartups.io/?hq_location=USA'
@@ -79,6 +90,7 @@ if __name__ == '__main__':
   #companies_df = get_careers_page(companies)
   companies_df = pd.DataFrame(companies)
   companies_df['careers'] = companies_df['link'].map(get_careers_href)
-  print(companies_df)
   companies_final = companies_df.dropna()
+  print(companies_df)
+  print(companies_final)
   companies_final.to_json('company_careers.json', orient='records', lines=True)

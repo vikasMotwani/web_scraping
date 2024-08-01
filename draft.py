@@ -4,9 +4,9 @@ from selenium import webdriver
 from selenium.common.exceptions import WebDriverException
 import time
 from urllib.parse import urljoin
-import re
+import requests
 
-company = 'https://fireworks.ai/'
+company = 'http://quantumcircuits.com/'
 
 options = webdriver.ChromeOptions()
 options.add_argument("--headless=new")
@@ -24,3 +24,8 @@ print(career_link)
 if career_link:
     career_href = urljoin(company, career_link['href'])
 print(career_href)
+try:
+        driver.get(career_href)
+        print(career_href)
+except Exception as e:
+        print(f"Error: {e} for URL: {url}")
