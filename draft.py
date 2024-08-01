@@ -28,4 +28,4 @@ try:
         driver.get(career_href)
         print(career_href)
 except Exception as e:
-        print(f"Error: {e} for URL: {url}")
+        print(False)
