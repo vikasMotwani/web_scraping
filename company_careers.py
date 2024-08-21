@@ -25,7 +25,7 @@ def get_companies_url(url):
   result = soup.find('div', {'class': 'infinite-container'})
   li =  result.find_all('div', {'class': 'infinite-item'})
   for i in li:
-    c = i.find('a', {'id': 'startup-website-link'}, text=True, href=True)
+    c = i.find('a', {'id': 'startup-website-link'}, string=True, href=True)
     if not c:
       continue
     company = { 'name': c.text , 'link': c['href'].replace('?utm_source=topstartups.io', '') }
@@ -52,7 +52,7 @@ def get_careers_href(company):
     ]
     
     for pattern in patterns:
-      career_link = soup.find('a', href=True, text=pattern)
+      career_link = soup.find('a', href=True, string=pattern)
       if career_link:
         career_href = urljoin(company, career_link['href'])
         print(career_href)

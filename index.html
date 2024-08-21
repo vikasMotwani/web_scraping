@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company Careers</title>
+    <style>
+        table {
+            width: 50%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid black;
+        }
+
+        th,
+        td {
+            padding: 8px;
+            text-align: left;
+        }
+    </style>
+</head>
+
+<body>
+    <h2 style="text-align:center;">Company Career Results</h2>
+    <table id="jsonTable">
+        <thead>
+            <tr id="tableHeader"></tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+    </table>
+
+    <script>
+        fetch('/data.json')
+            .then(response => response.text())
+            .then(text => {
+                const lines = text.trim().split('\n');
+                const data = lines.map(line => JSON.parse(line));
+                generateTable(data);
+            })
+            .catch(error => console.error('Error loading JSON:', error));
+
+        function generateTable(data) {
+            const tableHeader = document.getElementById('tableHeader');
+            const tableBody = document.getElementById('tableBody');
+
+            // Create table headers
+            const headers = Object.keys(data[0]);
+            headers.forEach(header => {
+                const th = document.createElement('th');
+                th.textContent = header;
+                tableHeader.appendChild(th);
+            });
+
+            // Create table rows
+            data.forEach(item => {
+                const tr = document.createElement('tr');
+                headers.forEach(header => {
+                    const td = document.createElement('td');
+                    if (header === 'link' || header === 'careers') { // Adjust these names as needed
+                        const a = document.createElement('a');
+                        a.href = item[header];
+                        a.textContent = item[header];
+                        a.target = '_blank'; // Open in a new tab
+                        td.appendChild(a);
+                    } else {
+                        td.textContent = item[header];
+                    }
+                    tr.appendChild(td);
+                });
+                tableBody.appendChild(tr);
+            });
+        }
+    </script>
+</body>
+
+</html>
