@@ -42,19 +42,18 @@ This project is a web scraper built with Python and BeautifulSoup to collect inf
 
 ## Usage
 
-1. **Run the scraper script:**
+1. **Go to node_backend and Run the npm script:**
     ```sh
-    python startup_finder.py
+    npm run start_all
     ```
 
-    Ensure `startup_finder.py` contains your web scraping code.
+    This automatically runs the scraper and opens up a webpage on localhost
 
 2. **Output:**
-    - The script will print the names of the startup companies to the console.
-    - The data can be saved to a file or database as needed (future implementation).
+    - The script will print the names of the startup companies and their career pages to the console and save them to a json
+    - The data can be viewed in the started node app using this json
   
 ## Future Work
 
-- Extend the scraper to navigate to each company's website and find their career pages.
 - Extract job listings from the career pages and filter them based on suitability.
 - Save the collected job data to a structured format (e.g., CSV, database).
