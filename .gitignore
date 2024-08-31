@@ -1,3 +1,3 @@
-*.json
+/json_data
 draft.py
-/node_modules
+/node_backend/node_modules

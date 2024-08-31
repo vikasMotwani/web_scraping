@@ -6,7 +6,7 @@ import time
 from urllib.parse import urljoin
 from IPython.display import display
 
-companies_df = pd.read_json('company_careers.json', lines=True)
+companies_df = pd.read_json('../json_data/company_careers.json', lines=True)
 
 options = webdriver.ChromeOptions()
 options.add_argument("--headless=new")
@@ -35,5 +35,5 @@ def scrape_careers(company_careers):
         return []
 
 companies_df['jobs'] = companies_df['careers'].map(scrape_careers)
-companies_df.to_json('company_jobs.json', orient='records', lines=True)
+companies_df.to_json('../json_data/company_jobs.json', orient='records', lines=True)
 #display(companies_df)

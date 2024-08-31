@@ -87,7 +87,7 @@ def main(base_url, max_pages):
   companies_final = companies_df.dropna()
   print(companies_df)
   print(companies_final)
-  companies_final.to_json('company_careers.json', orient='records', lines=True)
+  companies_final.to_json('../json_data/company_careers.json', orient='records', lines=True)
 
 if __name__ == '__main__':
   base_url = 'https://topstartups.io/?hq_location=USA'

@@ -11,7 +11,7 @@ app.get('/', (req, res) => {
 
 // Serve the JSON file
 app.get('/data.json', (req, res) => {
-    res.sendFile(path.join(__dirname, 'company_careers.json'));
+    res.sendFile(path.join(__dirname, '../json_data/company_careers.json'));
 });
 
 // Start the server

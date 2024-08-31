@@ -1,0 +1,10 @@
+{
+  "scripts": {
+    "start_node": "node app.js",
+    "start_python": "python ../python_src/company_careers.py",
+    "start_all": "npm run start_python && npm run start_node"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
